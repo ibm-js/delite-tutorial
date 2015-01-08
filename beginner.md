@@ -1,7 +1,7 @@
 # delite - creating custom components
 
 ## delite background
-delite is a new JavaScript library born out of the [Dojo Toolkit Dijit framework](http://dojotoolkit.org/reference-guide/1.10/dijit).
+`delite` is a new JavaScript library born out of the [Dojo Toolkit Dijit framework](http://dojotoolkit.org/reference-guide/1.10/dijit).
 This isn't a replacement per se but a repository to be used as the core building blocks for leveraging current and future standards
 in HTML, CSS & JavaScript to build reusable Web Components.
 
@@ -12,7 +12,7 @@ More information can be found on the [delite website](http://ibm-js.github.io/de
 
 ## Tutorial details
 In this tutorial you'll learn how to create your own custom elements, learn how to register them, learn how to use templates
-and learn how you can bind data. It's a beginner tutorial so we won't be delving too deep into what delite provides (yet!!!).
+and learn how you can bind data. It's a beginner tutorial so we won't be delving too deep into what `delite` provides (yet!!!).
 
 
 ## Getting started
@@ -25,11 +25,11 @@ Install the `generator-delite-element` globally (or update it if necessary).
 
 ##Templates
 `delite` provides first class support for templates. We wouldn't expect to programmatically create DOM nodes & this is where
-delite comes into it's own; out of the box `delite` supports templating using a built in implementation of [Handlebars](http://handlebarsjs.com/).
+`delite` comes into it's own; out of the box `delite` supports templating using a built in implementation of [Handlebars](http://handlebarsjs.com/).
 
 Note there are some limitations using the `delite/handlebars!` plugin for templating, namely it doesn't support iterators or conditionals.
 However in many cases this isn't a limiting factor. Support for this will be explained in a later more advanced tutorial when we discuss
-[Liaison](https://github.com/ibm-js/liaison). The handlebars template implementation delite uses is primarily focused on performance.
+[Liaison](https://github.com/ibm-js/liaison). The handlebars template implementation `delite` uses is primarily focused on performance.
 
 Let's try create a 'real life' widget, for example a blogging widget.
 
@@ -71,7 +71,7 @@ Viewing the `./samples/BlogPost.html` example HTML we can see we've (partly) cre
 ```html
 <blog-post id="element" value="The Title"></blog-post>
 ```
-For those who used the Dojo Toolkit Dijit framework previously, an important conceptual difference in delite is that the widget is the DOM node.
+For those who used the Dojo Toolkit Dijit framework previously, an important conceptual difference in `delite` is that the widget is the DOM node.
 Dijit widgets instead had a property which referenced the DOM node. For example if you open your browser developer tools and in the console enter
 `myvar = document.getElementById('element')` and then explore the properties on that variable `myvar`, you'll see it's just a regular HTML element;
 if you're more inquisitive you might be able to see there are extra properties/methods on this element which is what the `delite` framework is providing.
@@ -369,6 +369,7 @@ Note the `{{theme}}` placeholder. As explained in the theme documentation, this 
 based on the platform/browser, from a request parameter on the URL or set specifically via a `require`. You can also configure themes using the
 loader `require.config`.
 The default theme is the bootstrap theme; have a look at some of the existing less/CSS variables in https://github.com/ibm-js/delite/tree/master/themes/bootstrap.
+
 This isn't the place to discuss the `less` variables `delite` provides but an example of how they are used can be seen in the `deliteful`
 project e.g. [https://github.com/ibm-js/deliteful/tree/master/StarRating/themes](https://github.com/ibm-js/deliteful/tree/master/StarRating/themes).
 
@@ -410,10 +411,36 @@ require(["delite/register", "blogging-package/BlogPost", "delite/theme!delite/th
 });
 ```
 
-i.e. loading `"delite/theme!delite/themes/{{theme}}/global.css"` for the page level theming and you should see something like the following:
+i.e. a minor difference but we're now loading `"delite/theme!delite/themes/{{theme}}/global.css"` for the page level theming.
+
+Let's also update the boostrap `./BlogPost/css/boostrap/BlogPost.css` theme CSS slightly to the following:
+
+
+```css
+/* style for the custom element itself */
+.blog-post {
+    display: block;
+}
+.blog-post h3 {
+    color: blue;
+}
+.blog-post p.blogdetails span {
+    font-weight: lighter;
+}
+.blog-post div.blog {
+    padding-left: 50px;
+}
+```
+
+You should see something like the following if you refresh your browser:
 
 > <img src='./images/custom_templated_theming.png'/>
 
+
+If you look at your debugger network tools, notice how the `./bower_components/delite/themes/bootstrap/common.css` and
+`./bower_components/delite/themes/bootstrap/global.css` CSS files are also loaded. The `"delite/theme!` plugin provides
+basic less variables/CSS classes and structure for loading your theme files. Have a look through the less/CSS files in the
+`./bower_components/delite/themes/` directory.
 
 ---
 
@@ -426,7 +453,7 @@ the fundamentals of a `delite` custom element.
 
 Again we'll use the `generator-delite-element` Yeoman generator.
 
-Create a new directory (named `title-package`, which will also be our package name) and change directory to it using the command :
+Create a new directory somewhere (named `title-package`, which will also be our package name) and change directory to it using the command :
 
     mkdir -p title-package
     cd title-package
@@ -457,29 +484,32 @@ We've created a new package named `title-package` for new widgets that we'll cre
 This is the most basic setup for a widget/custom component. You can view the sample generated HTML `./samples/TitleWidget.html`
 in a browser to see what's been created.
 
----
+
 
 ###A look at the widget lifecycle methods for our simple widget
-If we look at `"title-package/TitleWidget"` we can see two methods have been created for us, `render` and `refreshRendering`.
+If we look at our custom element module  ``./TitleWidget.js`` we can see two methods have been created for us, `render` and `refreshRendering`.
 `render` is the simplest of [lifecycle](https://github.com/ibm-js/delite/blob/master/docs/Widget.md#lifecycle)
 methods we need to create our widget.
 
 #### `render`
 We normally wouldn't create a `render` method because typically we'd be using templates to create the widget UI (which was shown earlier
 on) but because we aren't using a template we need to implement `render` ourselves.
-In our sample `render` method we're adding `<span>title</span>` and `<h1></h1>` elements to our widget as well as assigning a property
-to the widget named `_h1` i.e. via `this.appendChild(this._h = this.ownerDocument.createElement("h1"));` which we can use to update
-it programmatically or declaratively.
 
-In comparison to the previous templated widget you see there's obviously a lot more work going on.
+In this `render` method we're adding `<span>title</span>` and `<h1></h1>` elements to our widget as well as assigning a property
+to the widget named `_h1` i.e. via `this.appendChild(this._h = this.ownerDocument.createElement("h1"));` which we can use to update
+it programmatically or set it declaratively.
+
+In comparison to the previous templated widget you see it obviously requires much more work.
 
 #### `refreshRendering`
 `refreshRendering` is also a lifecycle method but implemented in `decor/Invalidating`, which `delite/Widget` inherits from.
-Its purpose is to observe changes to properties defined on the widget and update the UI. In your web browser developer tools, if
-you place a breakpoint in that method and then click the "click to change title" button, you'll see this method is called
-(because the button adds inline JavaScript to update the element's value property).
 
-If we wanted to see what the old value was (and also display it to the DOM) we can change this method from
+Its purpose is to observe changes to properties defined on the widget and update the UI. In your web browser developer tools, if
+you place a breakpoint in that method and then click the "*click to change title*" button, you'll see this method is called
+(because the button adds inline JavaScript to update the element's value property i.e.
+`onclick="element.value='New Title'; event.target.disabled=true"`).
+
+If we wanted to see what the old value was (and also display it to the DOM) we can change this method in `./TitleWidget.js` from
 
 ```js
 refreshRendering: function (props) {
@@ -501,9 +531,34 @@ refreshRendering: function (props) {
 }
 ```
 
-Notice when you first load the page, this method will be called for each widget and if you set a breakpoint in this method when you reload the page
-you'll see that the `value` property of our widget is contained in the `props` argument. This is because we're setting the `value` property
-on the declaratively written widget to `value="The Title"` and setting the value property on the programmatically written widget to `value : "another custom element title"`.
+Also let's update the `./samples/TitleWidget.html` JavaScript from:
+
+```js
+require(["delite/register", "title-package/TitleWidget"], function (register, TitleWidget) {
+    register.parse();
+});
+```
+to add a programmatically created widget:
+
+```js
+require(["delite/register", "title-package/TitleWidget"], function (register, TitleWidget) {
+    register.parse();
+    var anotherTitleWidget = new TitleWidget({value : 'another custom element title'});
+    // note you must call startup() for programmatically created widgets
+    anotherTitleWidget.placeAt(document.body, 'last');
+    anotherTitleWidget.startup();
+});
+```
+
+If not already set, set a breakpoint (via your JavaScript debugger) to the `refreshRendering` method of our custom element module `./TitleWidget.js` and
+reload the page.
+
+Notice when you first load the page, this method will be called for each widget, you'll also see that the `value` property of our widget is
+contained in the `props` argument of this method.
+
+This is because we're setting the `value` property on the declaratively written widget to `value="The Title"` and setting the value property
+on the programmatically written widget to `value : "another custom element title"`.
+
 If you don't set the `value` property of the widget at construction time, the `value` property of our widget is NOT contained in the `props` argument.
 
 Click the 'click to change title button' and the widget will render like:
@@ -513,17 +568,19 @@ Click the 'click to change title button' and the widget will render like:
 If you still have a breakpoint set in `refreshRendering` you will see again that the `value` property of our widget is again contained in the `props`
 argument.
 
-Also, if you update the value `property` of `./TitleWidget.js` to:
+Update the value `property` of `./TitleWidget.js` to:
 
 ```js
 value: "The Title",
 ```
 
-You'd notice again the `value` property of our widget is NOT contained in the `props` argument. This is because the property value hasn't changed.
+And reload the page. Notice again the `value` property of our widget is NOT contained in the `props` argument. This is because the property value hasn't changed.
 The [decor/Invalidating](https://github.com/ibm-js/decor/blob/master/docs/Invalidating.md) documentation explains this behaviour.
 
 
 
 ## Round up
-As you've seen, the basics of delite are very easy when building a custom element, keeping in mind we've only touched on some capabilities of this project.
-We'll expand on this and discuss more advanced topics in a later tutorial.
+As you've seen, the basics of `delite` are very easy when building a custom element, keeping in mind we've only touched on some of the capabilities of this project.
+We've also touched on some lower level concerns of `delite`.
+
+We'll expand on this in future and discuss more advanced topics in a later tutorial.
