@@ -12,7 +12,7 @@ More information can be found on the [delite website](http://ibm-js.github.io/de
 
 ## Tutorial details
 In this tutorial you'll learn how to create your own custom elements, learn how to register them, learn how to use templates
-and learn how you can bind data. It's a beginner tutorial so we won't be delving too deep into what `delite` provides (yet!!!).
+and learn how to theme them. It's a beginner tutorial so we won't be delving too deep into what `delite` provides (yet!!!).
 
 
 ## Getting started
@@ -36,7 +36,7 @@ Let's try create a 'real life' widget, for example a blogging widget.
 ### create the scaffold
 We'll create a new `delite` custom element using Yeoman.
 
-From the command line create a new directory somewhere (named `blogging-package`) and change directory to it using the command:
+From the command line create a new directory somewhere (named `blogging-package`) and change directory to it using the commands:
 
     mkdir -p blogging-package
     cd blogging-package
@@ -72,8 +72,10 @@ Viewing the `./samples/BlogPost.html` example HTML we can see we've (partly) cre
 <blog-post id="element" value="The Title"></blog-post>
 ```
 For those who used the Dojo Toolkit Dijit framework previously, an important conceptual difference in `delite` is that the widget is the DOM node.
-Dijit widgets instead had a property which referenced the DOM node. For example if you open your browser developer tools and in the console enter
-`myvar = document.getElementById('element')` and then explore the properties on that variable `myvar`, you'll see it's just a regular HTML element;
+Dijit widgets instead had a property which referenced the DOM node.
+
+For example if you open your browser developer tools and in the console enter `myvar = document.getElementById('element')` and then explore
+the properties on that variable `myvar`, you'll see it's just a regular HTML element;
 if you're more inquisitive you might be able to see there are extra properties/methods on this element which is what the `delite` framework is providing.
 
 ###Registering
@@ -149,7 +151,7 @@ i.e. `template: template`.
 ####CSS
 
 If we look at the `./BlogPost.js` custom element module, we see there's a property defined named `baseClass` i.e. `baseClass: "blog-post"`.
-This adds a class name to the root node of our custom element (which you can see in the DOM using your debugger tools). Also notice we include
+This adds a class name to the root node of our custom element (which you can see in the DOM using your debugger tools if you inspected that element). Also notice we include
 in the `define` the `requirejs-dplugins/css!` plugin to load our widget CSS i.e. `"requirejs-dplugins/css!./BlogPost/css/BlogPost.css"`.
 This plugin is obviously used to load CSS for our custom element. There's nothing much to say here apart from this is how you individually style
 your components.
@@ -373,8 +375,8 @@ The default theme is the bootstrap theme; have a look at some of the existing le
 This isn't the place to discuss the `less` variables `delite` provides but an example of how they are used can be seen in the `deliteful`
 project e.g. [https://github.com/ibm-js/deliteful/tree/master/StarRating/themes](https://github.com/ibm-js/deliteful/tree/master/StarRating/themes).
 
-To load widget themes you must create folders with the same name of the theme name for each CSS file, if the theme/folder name doesn't exist you'll
-see 404's in your browser developer tools (TODO: not the case for built CSS).
+To load a widget theme you must create a folder with the name of the theme you want to load for each widget CSS file, if the theme/folder name doesn't exist you'll
+see 404's in your browser developer tools.
 
 For example our `./BlogPost/css/BlogPost.css` should be updated so that the bootstrap theme of our widget is located at
 `./BlogPost/css/bootstrap/BlogPost.css`. Assuming you're not testing this on an IOS device, setting the theme via a request parameter etc you
@@ -453,7 +455,7 @@ the fundamentals of a `delite` custom element.
 
 Again we'll use the `generator-delite-element` Yeoman generator.
 
-Create a new directory somewhere (named `title-package`, which will also be our package name) and change directory to it using the command :
+Create a new directory somewhere (named `title-package`, which will also be our package name) and change directory to it using the commands :
 
     mkdir -p title-package
     cd title-package
