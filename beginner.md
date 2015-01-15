@@ -1,9 +1,10 @@
 # delite - creating custom components
 
 ## delite background
-`delite` is a new JavaScript library born out of the [Dojo Toolkit Dijit framework](http://dojotoolkit.org/reference-guide/1.10/dijit).
-This isn't a replacement per se but a repository to be used as the core building blocks for leveraging current and future standards
-in HTML, CSS & JavaScript to build reusable Web Components.
+`delite` is a new JavaScript library to provide a UI framework for both desktop and mobile platforms <sup><a href="#link1">[1]</a></sup>.
+
+This repository is intended to be used as the core building blocks to leverage current and future standards in HTML, CSS & JavaScript for the
+purpose of writing reusable Web Components.
 
 It can be used on its own but more likely used with other projects either from the [ibm-js repositories](https://github.com/ibm-js)
 or other repositories.
@@ -28,7 +29,8 @@ Install the `generator-delite-element` globally (or update it if necessary).
 `delite` comes into it's own; out of the box `delite` supports templating using a built in implementation of [Handlebars](http://handlebarsjs.com/).
 
 Note there are some limitations using the `delite/handlebars!` plugin for templating, namely it doesn't support iterators or conditionals.
-However in many cases this isn't a limiting factor. Support for this will be explained in a later more advanced tutorial when we discuss
+However in many cases this isn't a limiting factor.
+Alternate templating engines can be plugged in if needed; support for this will be explained in a later more advanced tutorial when we discuss
 [Liaison](https://github.com/ibm-js/liaison). The handlebars template implementation `delite` uses is primarily focused on performance.
 
 Let's try create a 'real life' widget, for example a blogging widget.
@@ -71,11 +73,9 @@ Viewing the `./samples/BlogPost.html` example HTML we can see we've (partly) cre
 ```html
 <blog-post id="element" value="The Title"></blog-post>
 ```
-For those who used the Dojo Toolkit Dijit framework previously, an important conceptual difference in `delite` is that the widget is the DOM node.
-Dijit widgets instead had a property which referenced the DOM node.
 
-For example if you open your browser developer tools and in the console enter `myvar = document.getElementById('element')` and then explore
-the properties on that variable `myvar`, you'll see it's just a regular HTML element;
+If you open your browser developer tools and in the console enter `myvar = document.getElementById('element')` and then explore
+the properties on that variable `myvar`, you'll see it's just a regular HTML element <sup><a href="#link2">[2]</a></sup>;
 if you're more inquisitive you might be able to see there are extra properties/methods on this element which is what the `delite` framework is providing.
 
 ###Registering
@@ -92,7 +92,7 @@ define([
 	"delite/register",
 	"delite/Widget",
 	"delite/handlebars!./BlogPost/BlogPost.html",
-    "requirejs-dplugins/css!./BlogPost/css/BlogPost.css"
+	"requirejs-dplugins/css!./BlogPost/css/BlogPost.css"
 ], function (register, Widget, template) {
 	return register("blog-post", [HTMLElement, Widget], {
 		baseClass: "blog-post",
@@ -117,8 +117,8 @@ Elements which inherit from `HTMLElement`
 using [valid custom element names](http://www.w3.org/TR/2013/WD-custom-elements-20130514/#dfn-custom-element-name) are custom elements.
 The most basic requirement for the tag name is it **MUST** contain a dash **(-)**.
 
-In case there's any confusion, the module name created `BlogPost` bears no relation to the custom element name i.e. `blog-post`, the module `BlogPost`
-registers the custom element tag name `blog-post`.
+In case there's any confusion, note that the module name (i.e. `BlogPost`) is independent of the custom element's name (i.e. `blog-post`), although
+by convention we define one custom element per module, and name them similarly.
 
 ###Declarative creation of custom elements
 If we view the generated sample `./samples/BlogPost.html`, we see the following JavaScript:
@@ -129,7 +129,7 @@ require(["delite/register", "blogging-package/BlogPost"], function (register) {
 });
 ```
 
-Declarative widgets (those created via markup in the page) need to be parsed in order to kick off the lifecycle of creating the widget.
+Declarative widget instances (those created via markup in the page) need to be parsed in order to kick off the lifecycle of creating the widget.
 
 
 ###Template
@@ -185,7 +185,7 @@ define([
 	"delite/register",
 	"delite/Widget",
 	"delite/handlebars!./BlogPost/BlogPost.html",
-    "requirejs-dplugins/css!./BlogPost/css/BlogPost.css"
+	"requirejs-dplugins/css!./BlogPost/css/BlogPost.css"
 ], function (register, Widget, template) {
 	return register("blog-post", [HTMLElement, Widget], {
 		baseClass: "blog-post",
@@ -208,7 +208,7 @@ So now if you change the body content of `./samples/BlogPost.html` to the follow
 <button onclick="element.value='Now sleeping!'; event.target.disabled=true">click to change title</button>
 ```
 
-And updating the template CSS `./BlogPost/css/BlogPost.css` to make it slightly more interesting too:
+And updating the template CSS `./BlogPost/css/BlogPost.css` to make it slightly more interesting to:
 
 ```css
 /* style for the custom element itself */
@@ -260,7 +260,7 @@ define([
 
 ```
 
-We've extended our widget using `delite/Container`. We also only need to extend `delite/Container` because it extends `delite/Widget`.
+We've extended our widget using `delite/Container` (we only need to extend `delite/Container` because it itself extends `delite/Widget`).
 
 #####Widget template
 Update `./BlogPost/BlogPost.html` to the following:
@@ -332,7 +332,7 @@ require(["delite/register", "blogging-package/BlogPost"], function (register, Bl
     anotherCustomElement.startup();
 });
 ```
-Note that programmatically created widgets should always call `startup()`. A helper function is provided by `delite/Widget` to place it
+Note that programmatically created widget instances should always call `startup()`. A helper function is provided by `delite/Widget` to place it
 somewhere in the DOM named `placeAt`
 (see the [documentation](https://github.com/ibm-js/delite/blob/master/docs/Widget.md#placement) for it's usage).
 
@@ -586,3 +586,10 @@ As you've seen, the basics of `delite` are very easy when building a custom elem
 We've also touched on some lower level concerns of `delite`.
 
 We'll expand on this in future and discuss more advanced topics in a later tutorial.
+
+## Footnotes
+
+1.  <i name="link1">`delite` was written by the same developers who wrote the [Dojo Toolkit Dijit framework](http://dojotoolkit.org/reference-guide/1.10/dijit).</i>
+
+2.  <i name="link2">For those who used the Dojo Toolkit Dijit framework previously, an important conceptual difference in `delite` is that the widget is the DOM node.
+   Dijit widgets instead had a property which referenced the DOM node.</i>
