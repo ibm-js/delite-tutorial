@@ -2,8 +2,13 @@
 .blog-post {
 	display: block;
 }
-
-/* style for some inner elements */
-.blog-post h1 {
+.blog-post h3 {
 	color: red;
+}
+.blog-post p.blogdetails span {
+	font-weight: bold;
+}
+/* Note this isn't used yet but will be in the next step when we discuss "delite/Container" */
+.blog-post div.blog {
+	padding-left: 20px;
 }
