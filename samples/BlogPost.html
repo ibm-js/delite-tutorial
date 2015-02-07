@@ -9,7 +9,7 @@
 				}
 			});
 
-            require(["delite/register", "blogging-package/BlogPost"], function (register, BlogPost) {
+            require(["delite/register", "blogging-package/BlogPost", "delite/theme!delite/themes/{{theme}}/global.css"], function (register, BlogPost) {
                 register.parse();
                 var anotherCustomElement = new BlogPost({value : 'The day after', publishDate : 'Nov 28th 2014', author : "My good self"});
                 // note you must call startup() for programmatically created widgets
@@ -19,7 +19,6 @@
                 anotherCustomElement.containerNode.innerHTML = containerNodeContent;
                 anotherCustomElement.startup();
             });
-			
 		</script>
 	</head>
 	<body>
