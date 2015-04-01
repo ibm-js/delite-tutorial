@@ -18,7 +18,7 @@ define([
 		refreshRendering: function (props) {
 			// if the value change update the display
 			if ("value" in props) {
-				this._h.innerHTML = this.value;
+				this._h.innerText = "old= '" + props["value"] + "', new='" + this.value + "'";
 			}
 		}
 	});
