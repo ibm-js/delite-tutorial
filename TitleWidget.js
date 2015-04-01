@@ -5,7 +5,7 @@ define([
 ], function (register, Widget) {
 	return register("title-widget", [HTMLElement, Widget], {
 		baseClass: "title-widget",
-		value: "",
+		value: "The Title",
 
 		render: function () {
 			// build static part of the display
