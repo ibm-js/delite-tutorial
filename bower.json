@@ -2,9 +2,9 @@
 	"name": "blogging-package",
 	"version": "0.0.1",
 	"dependencies": {
-		"delite": "0.5.x",
+		"delite": "0.7.x",
 		"requirejs": "2.1.x",
-		"requirejs-dplugins": "0.4.x",
+		"requirejs-dplugins": "0.5.x",
 		"requirejs-text": "2.0.x"
 	}
-}	
+}
