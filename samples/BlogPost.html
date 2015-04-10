@@ -11,12 +11,10 @@
 
             require(["blogging-package/BlogPost"], function (BlogPost) {
                 var anotherCustomElement = new BlogPost({value : 'The day after', publishDate : 'Nov 28th 2014', author : "My good self"});
-                // note you must call startup() for programmatically created widgets
                 anotherCustomElement.placeAt(document.body, 'last');
                 var containerNodeContent = "<b>boooooo</b> it's the day after, back to work soon :(" +
                         "<pre># time to start thinking about code again</pre>";
                 anotherCustomElement.containerNode.innerHTML = containerNodeContent;
-                anotherCustomElement.startup();
             });
 			
 		</script>
