@@ -1,0 +1,14 @@
+/* style for the custom element itself */
+.blog-post {
+	display: block;
+}
+.blog-post h3 {
+	color: red;
+}
+.blog-post p.blogdetails span {
+	font-weight: bold;
+}
+/* Note this isn't used yet but will be in the next step when we discuss "delite/Container" */
+.blog-post div.blog {
+	padding-left: 20px;
+}

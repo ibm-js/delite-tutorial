@@ -1,0 +1,9 @@
+/* style for the custom element itself */
+.title-widget {
+	display: block;
+}
+
+/* style for some inner elements */
+.title-widget h1 {
+	color: red;
+}
